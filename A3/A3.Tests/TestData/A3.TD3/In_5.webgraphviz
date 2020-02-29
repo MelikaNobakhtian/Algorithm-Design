@@ -1,0 +1,24 @@
+digraph G {
+   "1";
+   "2";
+   "3";
+   "4";
+   "5";
+   "6";
+   "7";
+   "5" -> "1" [label="54",weight="54"];
+   "6" -> "7" [label="35",weight="35"];
+   "2" -> "1" [label="4",weight="4"];
+   "3" -> "5" [label="93",weight="93"];
+   "4" -> "2" [label="25",weight="25"];
+   "5" -> "4" [label="-25",weight="-25"];
+   "2" -> "7" [label="23",weight="23"];
+   "4" -> "1" [label="-8",weight="-8"];
+   "5" -> "2" [label="41",weight="41"];
+   "4" -> "3" [label="28",weight="28"];
+   "4" -> "6" [label="41",weight="41"];
+   "2" -> "5" [label="35",weight="35"];
+   "2" -> "6" [label="-41",weight="-41"];
+   "5" -> "3" [label="90",weight="90"];
+   "5" -> "6" [label="52",weight="52"];
+}
