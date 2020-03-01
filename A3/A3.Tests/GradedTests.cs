@@ -28,7 +28,7 @@ namespace A3.Tests
         }
 
 
-        [TestMethod(), Timeout(50000)]
+        [TestMethod(), Timeout(30000)]
         public void SolveTest_Q4FriendSuggestion()
         {
             RunTest(new Q4FriendSuggestion("TD4"));
