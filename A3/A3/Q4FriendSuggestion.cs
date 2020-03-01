@@ -19,25 +19,32 @@ namespace A3
                                 long[][] edges, long QueriesCount,
                                 long[][] Queries)
         {
-            IDictionary<long, List<(long, long)>> neighbours = new Dictionary<long, List<(long, long)>>();
-            IDictionary<long, List<(long, long)>> neighboursR = new Dictionary<long, List<(long, long)>>();
+            List<long>[] neighbours = new List<long>[NodeCount];
+            List<long>[] w = new List<long>[NodeCount];
+            List<long>[] neighboursR = new List<long>[NodeCount];
+            List<long>[] wR = new List<long>[NodeCount];
             for (int i = 0; i < NodeCount; i++)
             {
-                neighbours.Add(i, new List<(long, long)>());
-                neighboursR.Add(i, new List<(long, long)>());
+                neighbours[i] = new List<long>();
+                neighboursR[i] = new List<long>();
+                w[i] = new List<long>();
+                wR[i] = new List<long>();
             }
-            for (int i = 0; i < EdgeCount; i++)
+            var count = edges.Length;
+            for(int i = 0; i < count; i++)
             {
-                neighbours[(int)edges[i][0] - 1].Add((edges[i][1] - 1, edges[i][2]));
-                neighboursR[(int)edges[i][1] - 1].Add((edges[i][0] - 1, edges[i][2]));
-            }
+                neighbours[edges[i][0] - 1].Add(edges[i][1] - 1);
+                neighboursR[edges[i][1] - 1].Add(edges[i][0] - 1);
+                w[edges[i][0] - 1].Add(edges[i][2]);
+                wR[edges[i][1] - 1].Add(edges[i][2]);
 
+            }
             long[] results = new long[QueriesCount];
             for (int i = 0; i < QueriesCount; i++)
             {
                 if (Queries[i][0] == Queries[i][1])
                     results[i] = 0;
-                var result = BidirectionalDijkstra(NodeCount, Queries[i][0] - 1, Queries[i][1] - 1, neighbours, neighboursR);
+                var result = BidirectionalDijkstra(NodeCount, Queries[i][0] - 1, Queries[i][1] - 1, neighbours, neighboursR,w,wR);
                 results[i] = result != long.MaxValue ? result : -1;
             }
 
@@ -72,7 +79,7 @@ namespace A3
             return minidx;
         }
 
-        public long BidirectionalDijkstra(long nodeCount, long start, long end, IDictionary<long, List<(long, long)>> neighbours, IDictionary<long, List<(long, long)>> neighboursR)
+        public long BidirectionalDijkstra(long nodeCount, long start, long end, List<long>[]  neighbours, List<long>[] neighboursR, List<long>[] w, List<long>[] wR)
         {
             bool[] process = new bool[nodeCount];
             bool[] processR = new bool[nodeCount];
@@ -93,21 +100,21 @@ namespace A3
                 long v = FindMin(dist, process, nodeCount);
                 process[v] = true;
                 allproc.Add(v);
-                foreach (var edge in neighbours[(int)v])
+                long len = neighbours[v].Count;
+                for(int i = 0; i < len; i++)
                 {
-                    Relax(v, edge.Item1, edge.Item2, dist);
+                    Relax(v, neighbours[v][i], w[v][i], dist);
                 }
-
                 if (processR[v] == true)
                     return ShortestPath(nodeCount, dist, distR, allproc);
                 long vR = FindMin(distR, processR, nodeCount);
                 processR[vR] = true;
                 allproc.Add(vR);
-                foreach (var edge in neighboursR[(int)vR])
+                len = neighboursR[vR].Count;
+                for (int i = 0; i < len; i++)
                 {
-                    Relax(vR, edge.Item1, edge.Item2, distR);
+                    Relax(vR, neighboursR[vR][i], wR[vR][i], distR);
                 }
-
                 if (process[vR] == true)
                     return ShortestPath(nodeCount, dist, distR, allproc);
             }
