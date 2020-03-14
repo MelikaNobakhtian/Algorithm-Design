@@ -96,13 +96,10 @@ namespace A4
             //Dictionary<long, double> cost = new Dictionary<long, double>();
             SimplePriorityQueue<long, double> cost = new SimplePriorityQueue<long, double>();
             bool geo = false;
-            //if (points[start][0] - (int)points[start][0] > 0)
-            //    geo = true;
             for (int i = 0; i < nodeCount; i++)
             {
                 cost.Enqueue(i, int.MaxValue);
                 dist[i] = int.MaxValue;
-                // cost[i] = int.MaxValue;
             }
             long n = nodeCount;
             dist[start] = 0;
