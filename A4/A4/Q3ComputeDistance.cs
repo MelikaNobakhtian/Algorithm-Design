@@ -93,7 +93,6 @@ namespace A4
             double[] dist = new double[nodeCount];
             //double[] cost = new double[nodeCount];
             //bool[] process = new bool[nodeCount];
-            //Dictionary<long, double> cost = new Dictionary<long, double>();
             SimplePriorityQueue<long, double> cost = new SimplePriorityQueue<long, double>();
             bool geo = false;
             for (int i = 0; i < nodeCount; i++)
