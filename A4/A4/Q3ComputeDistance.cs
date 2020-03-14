@@ -103,8 +103,6 @@ namespace A4
             long n = nodeCount;
             dist[start] = 0;
             cost.UpdatePriority(start, RealDist(points[start][0], points[start][1], points[end][0], points[end][1], geo));
-            //cost[start] = RealDist(points[start][0], points[start][1], points[end][0], points[end][1], geo);
-            //cost[start] = RealDist(points[start][0], points[start][1], points[end][0], points[end][1],geo);
             while (n != 0)
             {
                 //long v = FindMin(cost,nodeCount,process);
