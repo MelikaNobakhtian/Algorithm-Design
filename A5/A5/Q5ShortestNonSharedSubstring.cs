@@ -92,60 +92,7 @@ namespace A5
                                 }
                             }
                         }
-                        //if (sub != "#" && FirstText.Contains(sub) && !SecondText.Contains(sub) )
-                        //{
-                        //    string tmp = FindPath(node);
-                        //    int num = FirstText.IndexOf(tmp);
-                        //    if (result != null)
-                        //    {
-                        //        if (tmp.Length < result.Length)
-                        //        {
-                        //            result = tmp;
-                        //            stidx = num;
-                        //        }
-                        //        else if(tmp.Length==result.Length && num <= stidx)
-                        //        {
-                        //            result = tmp;
-                        //            stidx = num;
-                        //        }
-                        //    }
-                        //    else
-                        //    {
-                        //        result = tmp;
-                        //        stidx = num;
-                        //    }
-                        //}
-                        //else if (sub == "#")
-                        //{
-                        //    string tmp = FindPath(node);
-                        //    if (tmp == "#")
-                        //        continue;
-                        //    if (tmp.Contains("#"))
-                        //    {
-                        //        tmp = tmp.Trim('#');
-                        //        if (SecondText.Contains(tmp))
-                        //            continue;
-                        //    }
-                        //    int num = FirstText.IndexOf(tmp);
-                        //    if (result != null)
-                        //    {
-                        //        if (tmp.Length < result.Length )
-                        //        {
-                        //            result = tmp;
-                        //            stidx = num;
-                        //        }
-                        //        else if(tmp.Length==result.Length && num <= stidx)
-                        //        {
-                        //            result = tmp;
-                        //            stidx = num;
-                        //        }
-                        //    }
-                        //    else
-                        //    {
-                        //        result = tmp;
-                        //        stidx = num;
-                        //    }
-                        //}
+                     
                     }
                     foreach (var child in node.Children)
                         nodes.Enqueue(child);
