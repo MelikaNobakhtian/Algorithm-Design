@@ -1,0 +1,5 @@
+GGGA
+3
+CGA
+ATTC
+ACC
