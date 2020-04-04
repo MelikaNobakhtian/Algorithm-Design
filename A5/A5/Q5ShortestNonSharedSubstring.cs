@@ -92,7 +92,6 @@ namespace A5
                                 }
                             }
                         }
-                        //string sub = Text.Substring(start, end - start + 1);
                         //if (sub != "#" && FirstText.Contains(sub) && !SecondText.Contains(sub) )
                         //{
                         //    string tmp = FindPath(node);
