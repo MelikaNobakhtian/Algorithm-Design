@@ -26,7 +26,7 @@ namespace A4.Tests
         }
 
 
-        [TestMethod(), Timeout(30000)]
+        [TestMethod(), Timeout(35000)]
         public void SolveTest_Q3ComputeDistance()
         {
             RunTest(new Q3ComputeDistance("TD3"));
