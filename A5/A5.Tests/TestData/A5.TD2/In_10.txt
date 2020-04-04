@@ -1,0 +1,5 @@
+TTCA
+3
+TCA
+GCCG
+GATC

@@ -1,0 +1,13 @@
+$
+C$
+TGAC$
+A
+$
+TGATGAC$
+C
+C$
+TGAC$
+GA
+C$
+TGAC$
+TGA
