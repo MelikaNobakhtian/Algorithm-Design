@@ -50,7 +50,7 @@ namespace A6
             return result;
         }
 
-        private void QuickSort(int[] idx, char[] a, int s, int e)
+        public static void QuickSort(int[] idx, char[] a, int s, int e)
         {
             if (e > s)
             {
