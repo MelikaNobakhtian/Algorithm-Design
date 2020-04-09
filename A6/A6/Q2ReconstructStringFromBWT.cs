@@ -1,6 +1,7 @@
 ﻿using System;
 using TestCommon;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace A6
 {
@@ -18,36 +19,75 @@ namespace A6
         /// <param name="bwt"> A string Transform with a single “$” sign </param>
         /// <returns> The string Text such that BWT(Text) = Transform.
         /// (There exists a unique such string.) </returns>
+        public class charAndidx
+        {
+            public char Ch;
+            public int Idx;
+            public charAndidx(char ch, int idx)
+            {
+                Ch = ch;
+                Idx = idx;
+            }
+        }
         public string Solve(string bwt)
         {
-            char[] characters = bwt.ToCharArray();
-            char[] sorted = bwt.ToCharArray();
             int len = bwt.Length;
-            int[] idx = new int[len];
-            for (int i = 0; i < len; i++)
+            char[] sorted = bwt.ToCharArray();
+            Array.Sort(sorted);
+            Dictionary<char, int> countbefore = new Dictionary<char, int>();
+            char present = sorted[0];
+            countbefore.Add(present, 0);
+            int counter = 1;
+            for (int i = 1; i < len; i++)
             {
-                idx[i] = i;
-            }
-            QuickSort(idx, sorted, 0, len - 1);
-            int[] indexofchar = new int[len];
-            for (int i = 0; i < len; i++)
-            {
-                indexofchar[idx[i]] = i;
-            }
-            string result = "$";
-            int j = 0;
-            while (true)
-            {
-                if (characters[j] != '$')
-                {
-                    result = characters[j] + result;
-                    j = indexofchar[j];
-                }
+                if (present == sorted[i])
+                    counter++;
                 else
-                    break;
-
+                {
+                    present = sorted[i];
+                    countbefore.Add(present, counter);
+                    counter++;
+                }
             }
-            return result;
+            //string ff=str.ToCharArray()
+            //har[] sorted = Array.Sort(bwt.ToCharArray());
+            //long len = bwt.Length;
+            //Dictionary<char, long> chars = new Dictionary<char, long>();
+            //chars.Add('$', 0);
+            //chars.Add('A', 1);
+            //chars.Add('C', 2);
+            //chars.Add('G', 3);
+            //chars.Add('T', 4);
+            Dictionary<char, long> index = new Dictionary<char, long>();
+            index.Add('$', 0);
+            index.Add('A', 0);
+            index.Add('C', 0);
+            index.Add('G', 0);
+            index.Add('T', 0);
+            long[] periority = new long[len];
+            for (int i = 0; i < len; i++)
+            {
+                index[bwt[i]] += 1;
+                periority[i] = index[bwt[i]] + countbefore[bwt[i]];
+            }
+            //return null;
+            char[] result = new char[len];
+            //string result = null;
+            long k = len - 2;
+            long idx = 0;
+            char start = bwt[(int)idx];
+            result[len - 1] = '$';
+            while (start != '$')
+            {
+                result[k] = start;
+                idx = periority[idx] - 1;
+                start = bwt[(int)idx];
+                k--;
+            }
+
+            //string r = result.ToString();
+
+            return new string(result);
         }
 
         public static void QuickSort(int[] idx, char[] a, int s, int e)
