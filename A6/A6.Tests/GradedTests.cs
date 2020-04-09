@@ -19,7 +19,7 @@ namespace A6.Tests
             RunTest(new Q1ConstructBWT("TD1"));
         }
 
-        [TestMethod()/*, Timeout(1000)*/]
+        [TestMethod(), Timeout(1000)]
         public void SolveTest_Q2ReconstructStringFromBWT()
         {
             RunTest(new Q2ReconstructStringFromBWT("TD2"));
