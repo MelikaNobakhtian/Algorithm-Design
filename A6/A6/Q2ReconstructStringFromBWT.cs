@@ -19,16 +19,7 @@ namespace A6
         /// <param name="bwt"> A string Transform with a single “$” sign </param>
         /// <returns> The string Text such that BWT(Text) = Transform.
         /// (There exists a unique such string.) </returns>
-        public class charAndidx
-        {
-            public char Ch;
-            public int Idx;
-            public charAndidx(char ch, int idx)
-            {
-                Ch = ch;
-                Idx = idx;
-            }
-        }
+   
         public string Solve(string bwt)
         {
             int len = bwt.Length;
@@ -49,15 +40,7 @@ namespace A6
                     counter++;
                 }
             }
-            //string ff=str.ToCharArray()
-            //har[] sorted = Array.Sort(bwt.ToCharArray());
-            //long len = bwt.Length;
-            //Dictionary<char, long> chars = new Dictionary<char, long>();
-            //chars.Add('$', 0);
-            //chars.Add('A', 1);
-            //chars.Add('C', 2);
-            //chars.Add('G', 3);
-            //chars.Add('T', 4);
+ 
             Dictionary<char, long> index = new Dictionary<char, long>();
             index.Add('$', 0);
             index.Add('A', 0);
@@ -70,9 +53,7 @@ namespace A6
                 index[bwt[i]] += 1;
                 periority[i] = index[bwt[i]] + countbefore[bwt[i]];
             }
-            //return null;
             char[] result = new char[len];
-            //string result = null;
             long k = len - 2;
             long idx = 0;
             char start = bwt[(int)idx];
@@ -85,32 +66,10 @@ namespace A6
                 k--;
             }
 
-            //string r = result.ToString();
 
             return new string(result);
         }
 
-        public static void QuickSort(int[] idx, char[] a, int s, int e)
-        {
-            if (e > s)
-            {
-                char pivot = a[s];
-                int j = s;
-                for (int i = s + 1; i <= e; i++)
-                {
-                    if (a[i] < pivot)
-                    {
-                        j += 1;
-                        (a[i], a[j]) = (a[j], a[i]);
-                        (idx[i], idx[j]) = (idx[j], idx[i]);
-                    }
-                }
-                (a[s], a[j]) = (a[j], a[s]);
-                (idx[s], idx[j]) = (idx[j], idx[s]);
-
-                QuickSort(idx, a, s, j - 1);
-                QuickSort(idx, a, j + 1, e);
-            }
-        }
+     
     }
 }
