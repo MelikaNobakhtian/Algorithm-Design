@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Q2
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -26,7 +26,7 @@ namespace Q2
             return alphabet;
         }
 
-        public static List<int> booyemoore(string text,string pattern)
+        public static int[] booyemoore(string text,string pattern)
         {
             var alphabet = BadChar(pattern);
             int skip = 0;
@@ -54,12 +54,13 @@ namespace Q2
                 if (skip == 0)
                 {
                     result.Add(i);
-                    i = i + pattern.Length + 1;
+                    skip = 1;
                 }
-                if (i == text.Length - pattern.Length)
-                    return result;
+       
             }
-            return result;
+            if (result.Count == 0)
+                result.Add(-1);
+            return result.ToArray();
         }
     }
 }
