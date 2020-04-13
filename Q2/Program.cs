@@ -52,7 +52,10 @@ namespace Q2
 
                 }
                 if (skip == 0)
+                {
                     result.Add(i);
+                    i = i + pattern.Length + 1;
+                }
                 if (i == text.Length - pattern.Length)
                     return result;
             }
