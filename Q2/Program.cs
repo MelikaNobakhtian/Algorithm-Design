@@ -7,7 +7,7 @@ namespace Q2
     {
         static void Main(string[] args)
         {
-            var result = BadChar("aajjnka");
+            var result = booyemoore("WELCOMETOTEAMMAST", "TEAMMAST");
         }
 
         public static Dictionary<char,int> BadChar(string text)
@@ -24,6 +24,39 @@ namespace Q2
             }
             alphabet.Add('*', len);
             return alphabet;
+        }
+
+        public static List<int> booyemoore(string text,string pattern)
+        {
+            var alphabet = BadChar(pattern);
+            int skip = 0;
+            List<int> result = new List<int>();
+            for (int i = 0; i <= text.Length - pattern.Length; i += skip)
+            {
+                skip = 0;
+                for(int j = pattern.Length - 1; j >= 0; j--)
+                {
+                    if (pattern[j] != text[i + j])
+                    {
+                        if (alphabet.ContainsKey(text[i + j]))
+                        {
+                            skip = alphabet[text[i + j]];
+                            break;
+                        }
+                        else
+                        {
+                            skip = alphabet['*'];
+                            break;
+                        }
+                    }
+
+                }
+                if (skip == 0)
+                    result.Add(i);
+                if (i == text.Length - pattern.Length)
+                    return result;
+            }
+            return result;
         }
     }
 }
