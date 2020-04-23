@@ -98,14 +98,63 @@ namespace Exam1
         }
         public string Solve(string dna, string pattern)
         {
-            SuffixTree text = new SuffixTree(dna);
+            SuffixTree text = new SuffixTree(dna + "$");
             for(int i = 0; i < text.root.Children.Count; i++)
             {
-
+                var result = matchproblem(dna + "$", pattern, text.root.Children[i]);
+                if (result.Item2 > 1)
+                    continue;
+                if (result.Item1 == false)
+                    break;
             }
             return null;
+            //this.ExcludeTestCaseRangeInclusive(40, 106);
+            //string result = null;
+            //for(int i = 0; i <= dna.Length - pattern.Length;i++)
+            //{
+            //    if (match(dna, pattern, i))
+            //        result += i + " ";
+            //}
+            //if (result == null)
+            //    result = "No Match!";
+            //return result.Trim();
         }
 
-       // public void match (string text,Node child,string pattern)
+        //public List<int> find(Node node)
+        //{
+        //    List<int> maybe = new List<int>();
+        //}
+
+        public Tuple<bool,int> matchproblem(string text, string pattern,Node child)
+        {
+            bool smaller = false;
+            int distance = 0;
+            for(int i = 0; i < pattern.Length; i++)
+            {
+                if (child.Substr[1] < child.Substr[0] + i)
+                {
+                    smaller = true;
+                    break;
+                }
+                if (pattern[i] != text[child.Substr[0] + i])
+                    distance++;
+                if (distance > 1)
+                    return new Tuple<bool, int>(false, 2);
+            }
+            return new Tuple<bool, int>(smaller, distance);
+        }
+       public bool match (string text,string pattern,int i)
+        {
+            int dis = 0;
+            for(int j = 0; j < pattern.Length && dis<2; j++)
+            {
+                if (pattern[j] != text[i + j])
+                    dis++;
+            }
+            if (dis < 2)
+                return true;
+            else
+                return false;
+        }
     }
 }

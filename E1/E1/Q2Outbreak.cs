@@ -40,7 +40,8 @@ namespace Exam1
         }
         public double Solve(int N, int M, int[,] carrier, int[,] safe)
         {
-           
+            long[,] hh = new long[2, 4];
+            var f = hh.Length;
             double max = double.MaxValue;
             double maxofall = 0;
             //double[] maxes = new double[M];
