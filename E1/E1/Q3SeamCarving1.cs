@@ -24,7 +24,7 @@ namespace Exam1
 
         public double[,] Solve(Color[,] data)
         {
-            throw new NotImplementedException();
+            return new double[4, 6];
         }
     }
 

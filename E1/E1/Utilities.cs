@@ -67,7 +67,7 @@ namespace E1
                     {
                         for (int j = 0; j < bmp.GetLength(0); j++)
                         {
-                            picV.SetPixel(i, j, bmp[j,i]);
+                            picV.SetPixel(i, j, bmp[j, i]);
                         }
                     }
                     return picV;
@@ -78,7 +78,7 @@ namespace E1
                     {
                         for (int j = 0; j < bmp.GetLength(1); j++)
                         {
-                            picH.SetPixel(i, j, bmp[i,j]);
+                            picH.SetPixel(i, j, bmp[i, j]);
                         }
                     }
                     return picH;
@@ -117,13 +117,13 @@ namespace E1
         public static string[] ConvertColorArrayToRGBMatrix(Color[,] img)
         {
             string[] RGBMatrix = new string[img.GetLength(1)];
-                for (int i = 0; i < img.GetLength(0); i++)
+            for (int i = 0; i < img.GetLength(0); i++)
+            {
+                for (int j = 0; j < img.GetLength(1); j++)
                 {
-                    for (int j = 0; j < img.GetLength(1); j++)
-                    {
-                        RGBMatrix[j] += $"({img[i,j].R},{img[i,j].G},{img[i,j].B}) ";
-                    }
+                    RGBMatrix[j] += $"({img[i, j].R},{img[i, j].G},{img[i, j].B}) ";
                 }
+            }
             return RGBMatrix;
         }
 
