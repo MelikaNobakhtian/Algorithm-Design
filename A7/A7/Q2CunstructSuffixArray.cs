@@ -28,17 +28,15 @@ namespace A7
                 classes = UpdateClasses(order, classes, l);
                 l = 2 * l;
             }
-            //long[] class=private ComputeClasses(text, order);
-            //long[] class=Compute
             return order;
         }
 
-        public long[] UpdateClasses(long[] neworder,long[] classes,int l)
+        public long[] UpdateClasses(long[] neworder, long[] classes, int l)
         {
             int n = neworder.Length;
             long[] newclass = new long[n];
             newclass[neworder[0]] = 0;
-            for(int i = 1; i < n ; i++)
+            for (int i = 1; i < n; i++)
             {
                 long cur = neworder[i];
                 long pre = neworder[i - 1];
@@ -51,7 +49,7 @@ namespace A7
             }
             return newclass;
         }
-        public  long[] Sortdoubled(int textlength,long[] orders,long[] classes,int l)
+        public long[] Sortdoubled(int textlength, long[] orders, long[] classes, int l)
         {
             long[] neworder = new long[textlength];
             long[] count = new long[textlength];
@@ -59,7 +57,7 @@ namespace A7
                 count[classes[i]] += 1;
             for (int i = 1; i < textlength; i++)
                 count[i] += count[i - 1];
-            for(int i = textlength - 1; i >= 0; i--)
+            for (int i = textlength - 1; i >= 0; i--)
             {
                 long start = (orders[i] - l + textlength) % textlength;
                 long cl = classes[start];
@@ -69,12 +67,12 @@ namespace A7
             return neworder;
         }
 
-        public  long[] ComputeClasses(string text,long[] orders)
+        public long[] ComputeClasses(string text, long[] orders)
         {
             int len = text.Length;
             long[] classes = new long[len];
             classes[orders[0]] = 0;
-            for(int i = 1; i < len; i++)
+            for (int i = 1; i < len; i++)
             {
                 if (text[(int)orders[i]] != text[(int)orders[i - 1]])
                     classes[orders[i]] = classes[orders[i - 1]] + 1;
@@ -84,12 +82,12 @@ namespace A7
             return classes;
         }
 
-        public  long[] SortCharacters(string text)
+        public long[] SortCharacters(string text)
         {
             int len = text.Length;
             long[] order = new long[len];
             SortedDictionary<char, int> alphabet = new SortedDictionary<char, int>();
-            foreach(var ch in text)
+            foreach (var ch in text)
             {
                 if (!alphabet.ContainsKey(ch))
                     alphabet.Add(ch, 1);
@@ -104,18 +102,18 @@ namespace A7
                     continue;
                 else
                 {
-                    alphabet[l]+= firstvalue;
+                    alphabet[l] += firstvalue;
                     firstkey = l;
                     firstvalue = alphabet[firstkey];
                 }
-            for(int i = len - 1; i >= 0; i--)
+            for (int i = len - 1; i >= 0; i--)
             {
                 char c = text[i];
                 alphabet[c] -= 1;
                 order[alphabet[c]] = i;
             }
             return order;
-          
+
         }
     }
 }

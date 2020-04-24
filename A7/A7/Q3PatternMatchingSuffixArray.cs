@@ -18,15 +18,17 @@ namespace A7
         TestTools.Process(inStr, (Func<String, long, string[], long[]>)Solve, "\n");
 
         public HashSet<long> Searches;
+        public long Count=0;
         protected virtual long[] Solve(string text, long n, string[] patterns)
         {
-            this.ExcludeTestCaseRangeInclusive(2, 30);
-
+            Count = 0;
             Searches = new HashSet<long>();
-            Q2CunstructSuffixArray q2 = new Q2CunstructSuffixArray(" ");
-            var suffix = q2.Solve(text+'$');
+            text = text + "$";
+            var suffix = Solve(text);
             for (int i = 0; i < n; i++)
-                SearchForPattern(patterns[i], text+"$", text.Length+1, suffix);
+                SearchForPattern(patterns[i], text, text.Length, suffix);
+            if (Count == 0)
+                Searches.Add(-1);
             return Searches.ToArray();
         }
 
@@ -39,7 +41,8 @@ namespace A7
             {
                 mid = (left + right) / 2;
                 long end = Math.Min(suffixarray[mid] + pattern.Length, n );
-                if (pattern.CompareTo(text.Substring((int)suffixarray[mid],(int)end-(int)suffixarray[mid])) > 0)
+                string sub = text.Substring((int)suffixarray[mid], (int)end - (int)suffixarray[mid]);
+                if (pattern.CompareTo(sub) > 0)
                     left = mid+1;
                 else
                     right = mid;
@@ -50,16 +53,20 @@ namespace A7
             {
                 mid = (left + right) / 2;
                 long end = Math.Min(suffixarray[mid] + pattern.Length, n );
-                if (pattern.CompareTo(text.Substring((int)suffixarray[mid], (int)end - (int)suffixarray[mid] )) < 0)
+                string sub = text.Substring((int)suffixarray[mid], (int)end - (int)suffixarray[mid]);
+                if (pattern.CompareTo(sub) < 0)
                     right = mid;
                 else
                     left = mid + 1;
             }
-            for (int i = start; i <= right; i++)
+            for (int i = start; i < right; i++)
+            {
                 Searches.Add(suffixarray[i]);
+                Count++;
+            }
         }
 
-        public long[] SuffixArray(string text)
+        public virtual long[] Solve(string text)
         {
             long[] order = SortCharacters(text);
             long[] classes = ComputeClasses(text, order);
@@ -71,8 +78,6 @@ namespace A7
                 classes = UpdateClasses(order, classes, l);
                 l = 2 * l;
             }
-            //long[] class=private ComputeClasses(text, order);
-            //long[] class=Compute
             return order;
         }
 
