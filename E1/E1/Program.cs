@@ -9,19 +9,26 @@ namespace E1
     {
         public static void Main(string[] args)
         {
+            string[] info = new string[4];
+            info[0] = args[0]; //img address
+            info[1] = args[1]; //vertical
+            info[2] = args[2]; //horizontal
+            info[3]= @"..\..\..\..\E1.Tests\TestData\E1.TD3.4\"; //output
+            Solve(info);
         }
 
-        public string[] Solve(string[] data)
+        public static void Solve(string[] data)
         {
-            int dimReduction = int.Parse(data[0].Split()[0]);
-            char direction = char.Parse(data[0].Split()[1]);
-            string imagePath = data[1];
+            //int dimReduction = int.Parse(data[0].Split()[0]);
+            char direction = 'H';
+            string imagePath = data[0];
             var img = Utilities.LoadImage(imagePath);
             var bmp = Utilities.ConvertImageToColorArray(img);
-            var res = Solve(bmp, dimReduction, direction);
-            Utilities.SavePhoto(res, imagePath, "../../../../asd", direction);
-            return Utilities.ConvertColorArrayToRGBMatrix(res);
-           // return new string[3];
+            var v = int.Parse(data[1]);
+            var h = int.Parse(data[2]);
+            var res = Solve(bmp, v, h);
+            Utilities.SavePhoto(res, data[3],
+                 "Out_" + imagePath[imagePath.Length - 5] + (data[1] == "0" ? $"_h{v}" : $"_v{h}"), direction);
         }
 
         private static List<List<Color>> BuildList(Color[,] input, char dim)
@@ -29,9 +36,30 @@ namespace E1
             throw new NotImplementedException();
         }
 
-        public static Color[,] Solve(Color[,] input, int reduction, char direction)
+        public static Color[,] Solve(Color[,] input, int v, int h)
         {
-            throw new NotImplementedException();
+            int row = input.GetUpperBound(0) + 1;
+            int col = input.GetUpperBound(1) + 1;
+            var energy = ComputeEnergy(input, row, col);
+            //remove v
+            for(int i = 0; i < v; i++)
+            {
+                var seam = findVerticalSeam(energy, row, col);
+                var result = removeVerticalSeam(energy,input, seam, row, col);
+                energy = result.Item1;
+                input = result.Item2;
+                col--;
+            }
+            //remove h
+            for(int i = 0; i < h; i++)
+            {
+                var seam = findHorizontalSeam(energy, row, col);
+                var result = removeHorizontalSeam(energy,input, seam, row, col);
+                energy = result.Item1;
+                input = result.Item2;
+                row--;
+            }
+            return input;
         }
 
 
@@ -135,30 +163,7 @@ namespace E1
                 }
             }
             return energy;
-            //List<List<double>> energy = new List<List<double>>();
-            //for(int i = 0; i < bmp.Count; i++)
-            //{
-            //    energy.Add(new List<double>());
-            //    for(int j = 0; j < bmp[i].Count; j++)
-            //    {
-            //        energy[i].Add(0);
-            //        if (i - 1 < 0 || i + 1 >= bmp.Count || j-1<0 || j+1>=bmp.Count)
-            //        {
-            //            energy[i][j] = 1000;
-            //            continue;
-            //        }
-            //        var Rx = bmp[i + 1][j].R - bmp[i - 1][j].R;
-            //        var Gx= bmp[i + 1][j].G - bmp[i - 1][j].G;
-            //        var Bx= bmp[i + 1][j].B - bmp[i - 1][j].B;
-            //        var Ry = bmp[i][j + 1].R - bmp[i][j - 1].R;
-            //        var Gy= bmp[i][j + 1].G - bmp[i][j - 1].G;
-            //        var By= bmp[i][j + 1].B - bmp[i][j - 1].B;
-            //        var deltax = Math.Pow(Rx, 2) + Math.Pow(Gx, 2) + Math.Pow(Bx, 2);
-            //        var deltay = Math.Pow(Ry, 2) + Math.Pow(Gy, 2) + Math.Pow(By, 2);
-            //        energy[i][j] = Math.Sqrt(deltax + deltay);
-            //    }
-            //}
-            //return energy;
+          
         }
 
        
@@ -189,6 +194,28 @@ namespace E1
 
         }
 
+        public static (double[,],Color[,]) removeHorizontalSeam(double[,] energy,Color[,] img, int[] seam, int row, int column)
+        {
+            double[,] newenergy = new double[row - 1, column];
+            Color[,] newimg = new Color[row - 1, column];
+            int k = 0, h = 0;
+            for (int j = 0; j < column; j++)
+            {
+                for (int i = 0; i < row; i++)
+                {
+                    if (i == seam[j])
+                        continue;
+                    newenergy[k, h] = energy[i, j];
+                    newimg[k, h] = img[i, j];
+                    k++;
+                }
+                h++;
+                k = 0;
+            }
+            return (newenergy,newimg);
+
+        }
+
         // remove vertical seam from current picture
         public static double[,] removeVerticalSeam(double[,] energy, int[] seam, int row, int column)
         {
@@ -207,6 +234,27 @@ namespace E1
                 h = 0;
             }
             return newenergy;
+        }
+
+        public static (double[,],Color[,]) removeVerticalSeam(double[,] energy,Color[,] img, int[] seam, int row, int column)
+        {
+            double[,] newenergy = new double[row, column - 1];
+            Color[,] newimg = new Color[row, column - 1];
+            int k = 0, h = 0;
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    if (j == seam[i])
+                        continue;
+                    newenergy[k, h] = energy[i, j];
+                    newimg[k, h] = img[i, j];
+                    h++;
+                }
+                k++;
+                h = 0;
+            }
+            return (newenergy,newimg);
         }
 
     }
