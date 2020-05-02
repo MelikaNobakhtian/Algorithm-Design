@@ -4,7 +4,6 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using TestCommon;
-using System.Drawing;
 using E1;
 
 namespace Exam1
@@ -127,7 +126,7 @@ namespace Exam1
                 string[] dt = result[i].Split(',');
                 for(int j = 0; j < column; j++)
                 {
-                    energy[i-1, j] = double.Parse(dt[j]);
+                    energy[i-1, j] =Convert.ToDouble(dt[j]);
                 }
             }
             int numbers = int.Parse(result[rows+1]);
@@ -144,12 +143,26 @@ namespace Exam1
                 }
                 pixels[j] = pix.ToArray();
             }
-            //char mode = result[result.Length - 1][0];
-            // Parse input file
-            //double[,] data = new double[0, 0];
             var solved = Solve(energy,rows,column,modes,pixels);
             // convert solved into output string
-            return string.Empty;
+            string final = null;
+            rows = solved.GetUpperBound(0)+1;
+            column = solved.GetUpperBound(1)+1;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j <=column; j++)
+                {
+                    if (j == column-1 )
+                    {
+                        final += solved[i, j].ToString("F"+2);
+                        break;
+                    }
+                    final += solved[i, j].ToString("F" + 2) + ",";
+
+                }
+                final += '\n';
+            }
+            return final;
         }
 
 

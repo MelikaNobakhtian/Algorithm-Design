@@ -31,7 +31,7 @@ namespace Exam1.Tests
         {
             RunTest(new Q3SeamCarving1("TD3.1"));
             RunTest(new Q3SeamCarving2("TD3.2"));
-            //RunTest(new Q3SeamCarving3("TD3.3"));
+            RunTest(new Q3SeamCarving3("TD3.3"));
         }
 
         [TestMethod(), Timeout(30000)]
