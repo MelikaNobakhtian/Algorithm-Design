@@ -1,0 +1,36 @@
+graph G {
+   "1" [style = filled, color = red];
+   "2" [style = filled, color = red];
+   "3" [style = filled, color = blue];
+   "4" [style = filled, color = green];
+   "5" [style = filled, color = green];
+   "6" [style = filled, color = red];
+   "7" [style = filled, color = red];
+   "8" [style = filled, color = red];
+   "9" [style = filled, color = red];
+   "10" [style = filled, color = blue];
+   "11" [style = filled, color = blue];
+   "12" [style = filled, color = green];
+   "13" [style = filled, color = red];
+   "14" [style = filled, color = green];
+   "15" [style = filled, color = blue];
+   "16" [style = filled, color = red];
+   "4" -- "11";
+   "3" -- "7";
+   "6" -- "10";
+   "1" -- "8";
+   "9" -- "14";
+   "7" -- "11";
+   "3" -- "6";
+   "10" -- "13";
+   "13" -- "14";
+   "7" -- "13";
+   "1" -- "15";
+   "9" -- "15";
+   "11" -- "12";
+   "14" -- "15";
+   "3" -- "9";
+   "1" -- "13";
+   "9" -- "12";
+   "2" -- "12";
+}
