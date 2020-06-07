@@ -1,0 +1,13 @@
+graph G {
+   "1" [style = filled, color = blue];
+   "2" [style = filled, color = blue];
+   "3" [style = filled, color = red];
+   "4" [style = filled, color = blue];
+   "5" [style = filled, color = blue];
+   "1" -- "5";
+   "2" -- "3";
+   "2" -- "5";
+   "2" -- "4";
+   "1" -- "4";
+   "3" -- "5";
+}
