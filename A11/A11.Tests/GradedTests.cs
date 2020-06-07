@@ -26,7 +26,7 @@ namespace A11.Tests
             RunTest(new Q2FunParty("TD2"));
         }
 
-        [TestMethod(), Timeout(14000)]
+        [TestMethod(), Timeout(18000)]
         public void SolveTest_Q3SchoolBus()
         {
             RunTest(new Q3SchoolBus("TD3"));
