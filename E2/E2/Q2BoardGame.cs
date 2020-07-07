@@ -32,12 +32,29 @@ namespace E2
                 {
                     if (Board[i, j] == 2)
                     {
+                        var cl = Identifier(i, j, blue, BoardSize);
+                        var no = Identifier(i, j, none, BoardSize);
+                        var r = Identifier(i, j, red, BoardSize);
+                        results.Add($"{cl} {no} 0");
+                        results.Add($"-{r} 0");
                         inorout.Add(Identifier(i, j, blue, BoardSize));
                     }
                     else if (Board[i, j] == 3)
+                    {
                         inorout.Add(Identifier(i, j, red, BoardSize));
+                        var cl = Identifier(i, j, blue, BoardSize);
+                        var no = Identifier(i, j, none, BoardSize);
+                        var r = Identifier(i, j, red, BoardSize);
+                        results.Add($"{r} {no} 0");
+                        results.Add($"-{cl} 0");
+                    }
                     else
-                        results.Add($"-{Identifier(i, j, none, BoardSize)} 0");
+                    {
+                        results.Add($"{Identifier(i, j, none, BoardSize)} 0");
+                        results.Add($"-{Identifier(i, j, blue, BoardSize)} 0");
+                        results.Add($"-{Identifier(i, j, red, BoardSize)} 0");
+
+                    }
                     rowred[k] = Identifier(i, j, red, BoardSize);
                     colred[k] = Identifier(j, i, red, BoardSize);
                     rownone[k] = Identifier(i, j, none, BoardSize);
@@ -57,22 +74,19 @@ namespace E2
                 k = 0;
                 results.Add(string.Join(' ', rowred) +" "+string.Join(' ',rowblue)+" 0");
                 results.Add(string.Join(' ', colred) +" "+string.Join(' ',colblue)+ " 0");
-                string colmred = null;
-                string colmblue = null;
                 for(int t = 0; t < BoardSize; t++)
                 {
-                    colmred += $"-{colblue[t]} ";
-                    colmblue += $"-{colred[t]} ";
+                    for (int f = 0; f < BoardSize; f++)
+                        results.Add($"-{colred[t]} -{colblue[f]} 0");
                 }
-                results.Add(colmblue + "0");
-                results.Add(colmred + "0");
+               
             }
-           results.Add(string.Join(' ', inorout) + " 0");
+            //results.Add(string.Join(' ', inorout) + " 0");
             results[0] = $"{results.Count-1} {BoardSize * BoardSize * 3}";
             return results.ToArray();
         }
 
-        public long Identifier(int i, int j, int color, int n) => n * n * i + j * n + color;
+        public long Identifier(int i, int j, int color, int n) => n * 3 * i + j * 3 + color;
         public override Action<string, string> Verifier { get; set; } =
             TestTools.SatVerifier;
     }
