@@ -204,6 +204,63 @@ namespace TestCommon
             return string.Join("\n", processor(M, N, data));
         }
 
+        public static string Process(string inStr, Func<int, long[,], string[]> processor)
+        {
+            int BoardSize;
+            var lines = inStr.Split('\n');
+            int.TryParse(lines.First().Split(' ')[0], out BoardSize);
+
+            long[,] Board = new long[BoardSize, BoardSize];
+            for (int i = 0; i < BoardSize; i++)
+            {
+                String[] line = lines[i + 1].Split(' ');
+                for (int j = 0; j < line.Length; j++)
+                {
+                    Board[i, j] = long.Parse(line[j]);
+                }
+            }
+            return string.Join("\n", processor(BoardSize, Board));
+        }
+
+        public static string Process(string inStr, Func<int, List<List<long>>, long[,]> processor)
+        {
+            int NumberOfVariables, NumberOfFollowingLines;
+            var lines = inStr.Split('\n');
+            int.TryParse(lines.First().Split(' ')[0], out NumberOfVariables);
+            int.TryParse(lines.First().Split(' ')[1], out NumberOfFollowingLines);
+            List<List<long>> CNF = new List<List<long>>();
+
+            for (int i = 1; i <= NumberOfFollowingLines; i++)
+            {
+                String[] line = lines[i].Split(' ');
+                List<long> tmp = new List<long>();
+                foreach (var item in line)
+                {
+                    tmp.Add(long.Parse(item));
+                }
+                CNF.Add(tmp);
+            }
+            long[,] result = processor(NumberOfVariables, CNF);
+            var numberOfEdges = result.GetLength(0);
+            long n1 = 0;
+            long n2 = 0;
+
+            var output = new HashSet<string>();
+            for (int i = 0; i < numberOfEdges; i++)
+            {
+                n1 = result[i, 0];
+                n2 = result[i, 1];
+                if (n2 < n1)
+                {
+                    n1 = n1 + n2;
+                    n2 = n1 - n2;
+                    n1 = n1 - n2;
+                }
+                output.Add($"{n1} {n2}");
+            }
+            return string.Join("\n", output);
+        }
+
 
         public static string Process(string inStr, Func<int, int, double[,], String> processor)
         {
@@ -849,6 +906,18 @@ namespace TestCommon
             return longProcessor(d, e, list1.ToArray(), list2.ToArray()).ToString(); ;
         }
 
+        public static string Process(string inStr, Func<long, long, long[][], long[], long, long, long> solve)
+        {
+            var lines = inStr.Split(NewLineChars, StringSplitOptions.RemoveEmptyEntries);
+            long nodeCount, edgeCount, start, end;
+            ParseTwoNumbers(lines[0], out nodeCount, out edgeCount);
+            ParseTwoNumbers(lines[lines.Length - 1], out start, out end);
+            long[][] edges = ReadTree(lines.Skip(1).Take((int)edgeCount));
+            var nodeWeight = lines[lines.Length - 2].Split(IgnoreChars, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => long.Parse(x)).ToArray();
+
+            return solve(nodeCount, edgeCount, edges, nodeWeight, start, end).ToString();
+        }
 
         private static long ReadParallelArray(string inStr,
             List<long> list1, List<long> list2)
