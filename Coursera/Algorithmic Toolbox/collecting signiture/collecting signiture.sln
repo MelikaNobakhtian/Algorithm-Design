@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "collecting signiture", "collecting signiture.csproj", "{782A575A-57C2-46E9-8DD2-6902767CE1DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{782A575A-57C2-46E9-8DD2-6902767CE1DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{782A575A-57C2-46E9-8DD2-6902767CE1DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{782A575A-57C2-46E9-8DD2-6902767CE1DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{782A575A-57C2-46E9-8DD2-6902767CE1DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB3CC87B-44A3-40DF-A963-282F0FFDFF2B}
+	EndGlobalSection
+EndGlobal
